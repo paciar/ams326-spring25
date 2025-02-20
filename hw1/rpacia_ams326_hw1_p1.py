@@ -80,6 +80,12 @@ FLOP counting:
     cos(x): +1 FLOP
     Multiplication/subtraction between "separate" terms: +4 FLOPS
     TOTAL: 18 FLOPS
+
+Arguments:
+    x:  input x-variable
+
+Returns:
+    Result of f'(x) using provided x-value.
 """
 def fun_prime(x):
     return ((-3) * (np.exp(-(x**3))) * (x**2)) - (4*(x**3)) - np.cos(x)
