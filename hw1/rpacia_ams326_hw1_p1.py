@@ -127,6 +127,44 @@ def newton(x0, f, f_flops, f_p, f_p_flops, tol, root):
             xi = xi_1
         newton_iterations += 1
 
+"""
+Method 3 - Secant Method
+
+Arguments:
+    x0:         given initial root, x_0
+    x1:         given initial root, x_1
+    f:          function
+    f_flops:    function FLOPS (approximation)
+    tol:        tolerance level
+    root:       known root
+
+Returns:
+    A tuple in the form of (calculated root, num of iterations, num of FLOPS).
+"""
+def secant(x0, x1, f, f_flops, tol, root):
+    secant_iterations = 1   # Iteration begins at 1, since we are provided x_0 and x_1
+    secant_flops = 0
+    xi_min_1 = x0
+    xi = x1
+    while (True):
+        # x_(i+1) = x_i - (x_i - x_(i-1)) * (f(x_i) / (f(x_i) - f(x_(i-1)))
+        xi_plus_1 = xi - (xi - xi_min_1) * (f(xi) / (f(xi) - f(xi_min_1)))
+        # Every time x_(i+1) is calculated:
+        # +2 FLOPS for subtraction and multiplication of "outer terms".
+        # +3 FLOPS for subtraction/division of "inner terms".
+        # +(3 * f_flops) for calls to f(xi) and f(xi_min_1).
+        # Total: 5 + (3 * f_flops)
+        secant_flops += (5 + (3*f_flops))
+        # If the calculated root is within tolerance of the known root, break.
+        if (abs(xi_plus_1 - root) < tol):
+            # If this case is reached, +1 FLOP for calculating |c - root|.
+            secant_flops += 1
+            return xi_plus_1, secant_iterations, secant_flops
+        # Otherwise, set up x_(i-1) and x_i for the next iteration.
+        else:
+            xi_min_1 = xi
+            xi = xi_plus_1
+        secant_iterations += 1
 
 def main():
     # Tolerance level, known root, and FLOPS of fun(x)
@@ -150,6 +188,12 @@ def main():
        print(f"Newton's method: {newton_root}")
        print(f"Newton's method number of iterations: {newton_iterations}")
        print(f"Newton's method number of floating point operations (approximate): {newton_flops}")
+    elif (sys.argv[1] == "secant"):
+       # Method 3: Use the Secant method with two given initial roots x_0,1 = −1, 1.
+       secant_root, secant_iterations, secant_flops = secant(-1, 1, fun, fun_flops, tolerance, r)
+       print(f"Secant method: {secant_root}")
+       print(f"Secant method number of iterations: {secant_iterations}")
+       print(f"Secant method number of floating point operations (approximate): {secant_flops}")
     else:
         print("Usage: py rpacia_ams326_hw1_p1.py bisect|newton|secant|monte_carlo")
         exit(1)
