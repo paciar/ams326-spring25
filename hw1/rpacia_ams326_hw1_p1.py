@@ -69,11 +69,65 @@ Returns:
 def fun(x):
     return np.exp(-(x**3)) - (x**4) - np.sin(x)
 
+"""
+fun_prime(x) = (-3 * e^(-x^3) * x^2) - 4*(x^3) - cos(x)
+fun(x) differentiated with respect to x
+
+FLOP counting:
+    As previously shown, e^(-x^3) will count as +9 FLOPS
+    x^2: +1 FLOP
+    4*(x^3): +3 FLOPS
+    cos(x): +1 FLOP
+    Multiplication/subtraction between "separate" terms: +4 FLOPS
+    TOTAL: 18 FLOPS
+"""
+def fun_prime(x):
+    return ((-3) * (np.exp(-(x**3))) * (x**2)) - (4*(x**3)) - np.cos(x)
+
+"""
+Method 2 - Newton's Method
+
+Arguments:
+    x0:         initial starting point
+    f:          function
+    f_flops:    function FLOPS (approximation)
+    f_p:        derivative of f with respect to x
+    f_p_flops:  derivative function FLOPS (approximation)
+    tol:        tolerance level
+    root:       known root
+
+Returns:
+    A tuple in the form of (calculated root, num of iterations, num of FLOPS).
+"""
+def newton(x0, f, f_flops, f_p, f_p_flops, tol, root):
+    newton_iterations = 0
+    newton_flops = 0
+    # Initialize x_i to x_0.
+    xi = x0
+    while (True):
+        # If the calculated root is within tolerance of the known root, break.
+        if (abs(xi - root) < tol):
+            # If this case is reached, +1 FLOP for calculating |c - root|.
+            newton_flops += 1
+            return xi, newton_iterations, newton_flops
+        # Otherwise, calculate x_(i+1) and use it as x_i for the next iteration.
+        else:
+            # If this case is reached, +1 FLOP for calculating |c - root|.
+            # +2 FLOPS for the subtraction and division.
+            # +(f_flops) FLOPS for the call to f(xi) and +(f_p_flops) FLOPS for the call to f_p(xi).
+            # Total: +(3 + f_flops + f_p_flops)
+            newton_flops += (3 + f_flops + f_p_flops)
+            xi_1 = xi - (f(xi) / f_p(xi))
+            xi = xi_1
+        newton_iterations += 1
+
+
 def main():
     # Tolerance level, known root, and FLOPS of fun(x)
     tolerance = 0.5 * 10**(-4)
     r = 0.641583
     fun_flops = 14
+    fun_p_flops = 18
 
     if (len(sys.argv) != 2):
        print("Usage: py rpacia_ams326_hw1_p1.py bisect|newton|secant|monte_carlo")
@@ -84,6 +138,12 @@ def main():
        print(f"Bisection method: {bisect_root}")
        print(f"Bisection method number of iterations: {bisect_iterations}")
        print(f"Bisection method number of floating point operations (approximate): {bisect_flops}")
+    elif (sys.argv[1] == "newton"):
+       # Method 2: Use Newton’s method with the given initial root x_0 = 0.
+       newton_root, newton_iterations, newton_flops = newton(0, fun, fun_flops, fun_prime, fun_p_flops, tolerance, r)
+       print(f"Newton's method: {newton_root}")
+       print(f"Newton's method number of iterations: {newton_iterations}")
+       print(f"Newton's method number of floating point operations (approximate): {newton_flops}")
     else:
         print("Usage: py rpacia_ams326_hw1_p1.py bisect|newton|secant|monte_carlo")
         exit(1)
