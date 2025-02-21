@@ -5,6 +5,7 @@
 
 import numpy as np
 import sys
+import random as rand
 
 """
 Method 1 - Bisection Method
@@ -178,6 +179,39 @@ def secant(x0, x1, f, f_flops, tol, root):
             xi = xi_plus_1
         secant_iterations += 1
 
+"""
+Method 4 - Monte Carlo Method
+
+Arguments:
+    a0:         initial left bound
+    b0:         initial right bound
+    f:          function
+    f_flops:    function FLOPS (approximation)
+    tol:        tolerance level
+    root:       known root
+
+Returns:
+    A tuple in the form of (calculated root, num of iterations, num of FLOPS).
+"""
+def monte_carlo(a0, b0, f, f_flops, tol, root):
+    mc_iterations = 0
+    mc_flops = 0
+    while (True):
+        # Generate a random float within the provided range [a0,b0].
+        c = rand.uniform(a0, b0)
+        # According to ChatGPT-4o, rand.uniform can take approximately 18 FLOPS.
+        mc_flops += 18
+        # Only evaluate points if they are close enough to 0.
+        # +f_flops for calculating f(c) in the following if-block.
+        mc_flops += f_flops
+        if (f(c) < tol):
+            # If the calculated root is within tolerance of the known root, break.
+            # +1 FLOP for calculating |c - root|.
+            mc_flops += 1
+            if (abs(c - root) < tol):
+                return c, mc_iterations, mc_flops
+        mc_iterations += 1
+
 def main():
     # Tolerance level, known root, and FLOPS of fun(x)
     tolerance = 0.5 * 10**(-4)
@@ -206,6 +240,12 @@ def main():
        print(f"Secant method root: {secant_root}")
        print(f"Secant method number of iterations: {secant_iterations}")
        print(f"Secant method number of floating point operations (approximate): {secant_flops}")
+    elif (sys.argv[1] == "monte_carlo"):
+       # Method 4: Use Monte Carlo method for a given range [0.50, 0.75].
+       mc_root, mc_iterations, mc_flops = monte_carlo(0.5, 0.75, fun, fun_flops, tolerance, r)
+       print(f"Monte Carlo method root: {mc_root}")
+       print(f"Monte Carlo method number of iterations: {mc_iterations}")
+       print(f"Monte Carlo method number of floating point operations (approximate): {mc_flops}")
     else:
         print("Usage: py rpacia_ams326_hw1_p1.py bisect|newton|secant|monte_carlo")
         exit(1)
