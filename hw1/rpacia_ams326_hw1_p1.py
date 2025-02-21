@@ -23,6 +23,14 @@ Returns:
 def bisect(a0, b0, f, f_flops, tol, root):
     bisect_iterations = 0
     bisect_flops = 0
+
+    # Check if f(a0)*f(b0) >= 0. If so, the bisection method cannot be used because there cannot exist a root in the given range.
+    if (f(a0) * f(b0) >= 0):
+        print("The bisection method cannot be applied to the given parameters.")
+        exit(1)
+    # This initial check takes +1 FLOP for the multiplication and 2*f_flops for calculating f(a0) and f(b0).
+    bisect_flops += 1 + (2*f_flops)
+
     # Initialize search area to initial left/right bounds, [a0, b0].
     a = a0
     b = b0
@@ -37,13 +45,13 @@ def bisect(a0, b0, f, f_flops, tol, root):
             return c, bisect_iterations, bisect_flops
         # If f(a)*f(c) < 0, then the root must be in [a,c], so tighten right bound.
         elif (f(a)*f(c) < 0):
-            # If this case is reached, +1 FLOP for calculating |c - root| and +(2*f_flops) FLOPS for calculating f(a) and f(c).
-            bisect_flops += (1 + (2*f_flops))
+            # If this case is reached, +1 FLOP for calculating |c - root|, +1 FLOP for calculating f(a)*f(c), and +(2*f_flops) FLOPS for calculating f(a) and f(c).
+            bisect_flops += (2 + (2*f_flops))
             b = c
         # Otherwise, the root must be in [c,b]. so tighten left bound.
         else:
-            # If this case is reached, similarly, +(1 + 2*f_flops) FLOPS for performing the calculations.
-            bisect_flops += (1 + (2*f_flops))
+            # If this case is reached, similarly, +(2 + 2*f_flops) FLOPS for performing the calculations.
+            bisect_flops += (2 + (2*f_flops))
             a = c
         # Every loop iteration, increment the iteration counter.
         bisect_iterations += 1
@@ -122,9 +130,9 @@ def newton(x0, f, f_flops, f_p, f_p_flops, tol, root):
             # +2 FLOPS for the subtraction and division.
             # +(f_flops) FLOPS for the call to f(xi) and +(f_p_flops) FLOPS for the call to f_p(xi).
             # Total: +(3 + f_flops + f_p_flops)
-            newton_flops += (3 + f_flops + f_p_flops)
             xi_1 = xi - (f(xi) / f_p(xi))
             xi = xi_1
+            newton_flops += (3 + f_flops + f_p_flops)
         newton_iterations += 1
 
 """
@@ -142,8 +150,10 @@ Returns:
     A tuple in the form of (calculated root, num of iterations, num of FLOPS).
 """
 def secant(x0, x1, f, f_flops, tol, root):
-    secant_iterations = 1   # Iteration begins at 1, since we are provided x_0 and x_1
+    # Iteration begins at 1, since we are provided x_0 and x_1
+    secant_iterations = 1
     secant_flops = 0
+    # Initialize x_(i-1) and x_i to x_0 and x_1.
     xi_min_1 = x0
     xi = x1
     while (True):
@@ -162,6 +172,8 @@ def secant(x0, x1, f, f_flops, tol, root):
             return xi_plus_1, secant_iterations, secant_flops
         # Otherwise, set up x_(i-1) and x_i for the next iteration.
         else:
+            # +1 FLOP for calculating |c - root|.
+            secant_flops += 1
             xi_min_1 = xi
             xi = xi_plus_1
         secant_iterations += 1
@@ -179,19 +191,19 @@ def main():
     elif (sys.argv[1] == "bisect"):
        # Method 1: Use the bisection method with a given internal a_0 = −1 and b_0 = 1.
        bisect_root, bisect_iterations, bisect_flops = bisect(-1, 1, fun, fun_flops, tolerance, r)
-       print(f"Bisection method: {bisect_root}")
+       print(f"Bisection method root: {bisect_root}")
        print(f"Bisection method number of iterations: {bisect_iterations}")
        print(f"Bisection method number of floating point operations (approximate): {bisect_flops}")
     elif (sys.argv[1] == "newton"):
        # Method 2: Use Newton’s method with the given initial root x_0 = 0.
        newton_root, newton_iterations, newton_flops = newton(0, fun, fun_flops, fun_prime, fun_p_flops, tolerance, r)
-       print(f"Newton's method: {newton_root}")
+       print(f"Newton's method root: {newton_root}")
        print(f"Newton's method number of iterations: {newton_iterations}")
        print(f"Newton's method number of floating point operations (approximate): {newton_flops}")
     elif (sys.argv[1] == "secant"):
        # Method 3: Use the Secant method with two given initial roots x_0,1 = −1, 1.
        secant_root, secant_iterations, secant_flops = secant(-1, 1, fun, fun_flops, tolerance, r)
-       print(f"Secant method: {secant_root}")
+       print(f"Secant method root: {secant_root}")
        print(f"Secant method number of iterations: {secant_iterations}")
        print(f"Secant method number of floating point operations (approximate): {secant_flops}")
     else:
