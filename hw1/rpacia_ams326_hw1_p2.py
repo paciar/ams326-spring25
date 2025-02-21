@@ -21,9 +21,10 @@ def lagrange(k, x, points):
     lkx = 1
     # Keep track of how many valid terms have been printed, since asterisks are printed before the terms being accumulated.
     valid_terms = 0
-    # Iterate over all points and accumulate the product of all (x - xi) / (xk - xi), where k is the order of the Lagrange polynomial and i is the iteration index.
+    # Iterate over all points and accumulate the product of all (x - xi) / (xk - xi), where k is the order of the Lagrange polynomial, i is the iteration index, and n is the number of points.
     # Skip over iterations (i.e. do not accumulate the term) if i = k.
-    for i in range(len(points['x'])):
+    n = len(points['x'])
+    for i in range(n):
         if (i != k):
             # Print an asterisk before the accumulated term if it is not the first term. This ensures that asterisks are only printed between the terms being multiplied.
             if valid_terms > 0:
