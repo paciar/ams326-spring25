@@ -68,27 +68,24 @@ def poly(n, x, points):
 Method 2 - Quadratic Fit
 
 Arguments:
+    matrix_A:   matrix A in Ax = b
+    matrix_b:   matrix b in Ax = b
     x:          interpolating the data at point x=t
-    points:     set of given data points to be quadratically fitted
 
 Returns:
     The interpolated data at point t using a quadratic fit.
 """
-def quad(x, points):
-    # We will need a 5x3 matrix since we have 5 x-values and 3 constants to solve for.
-    matrix_A = np.zeros((5,3))
+def quad(matrix_A, matrix_b, x):
     matrix_c = np.zeros((3,1))
-    # We will need a 5x1 matrix for the 5 y-values.
-    matrix_b = np.zeros((5,1))
-    # Populate A and b matrices.
-    for i in range(len(points['x'])):
-        matrix_A[i] = [points['x'][i]**0, points['x'][i]**1, points['x'][i]**2]
-        matrix_b[i] = points['y'][i]
-    # Now, we want to solve A^T * A * c = A^T * b for c
-    matrix_c = np.linalg.solve(np.matmul(np.matrix.transpose(matrix_A), matrix_A), np.matmul(np.matrix.transpose(matrix_A), matrix_b))
+    # We want to solve A^T * A * c = A^T * b for c, which numpy conveniently has methods for.
+    matrix_AT = np.matrix.transpose(matrix_A)
+    matrix_ATA = np.matmul(matrix_AT, matrix_A)
+    matrix_ATb = np.matmul(matrix_AT, matrix_b)
+    matrix_c = np.linalg.solve(matrix_ATA, matrix_ATb)
     # We now have solved for c_1, c_2, and c_3.
     print(f"Q_2(t) = {matrix_c[0][0]} + {matrix_c[1][0]}t + {matrix_c[2][0]}t^2\n")
-    return matrix_c[0][0] + (matrix_c[1][0] * x) + (matrix_c[2][0] * (x**2))
+    qx = matrix_c[0][0] + (matrix_c[1][0] * x) + (matrix_c[2][0] * (x**2))
+    return qx
     
 
 def main():
@@ -102,13 +99,21 @@ def main():
         print("Usage: py rpacia_ams326_hw1_p2.py polynomial|quadratic")
         exit(1)
     elif(sys.argv[1] == "polynomial"):
-        # (1) Interpolate the data in a polynomial P_4(t) and compute P_4(t=6) using your P_4(t)
+        # (1) Interpolate the data in a polynomial P_4(t) and compute P_4(t=6) using your P_4(t).
         print("Polynomial interpolation:\n")
-        print(f"P_4(t=6) = {poly(4,6,points)}")
+        print(f"P_4(t=6) = {poly(4, 6, points)}")
     elif(sys.argv[1] == "quadratic"):
-        # (1) Interpolate the data in a polynomial P_4(t) and compute P_4(t=6) using your P_4(t)
+        # (2) Make a quadratic fit of the data Q_2(t) = a0 + a1*t + a2*(t^2) and compute Q_2(t=6) using Q_2(t).
+        # We will need a 5x3 matrix since we have 5 x-values and 3 constants to solve for.
+        matrix_A = np.zeros((5,3))
+        # We will need a 5x1 matrix for the 5 y-values.
+        matrix_b = np.zeros((5,1))
+        # Populate A and b matrices.
+        for i in range(len(points['x'])):
+            matrix_A[i] = [points['x'][i]**0, points['x'][i]**1, points['x'][i]**2]
+            matrix_b[i] = points['y'][i]
         print("Quadratic fit:\n")
-        print(f"Q_2(t=6) = {quad(6,points)}")
+        print(f"Q_2(t=6) = {quad(matrix_A, matrix_b, 6)}")
     else:
         print("Usage: py rpacia_ams326_hw1_p2.py polynomial|quadratic")
         exit(1)
