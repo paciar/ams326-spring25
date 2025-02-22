@@ -14,7 +14,7 @@
 - It is certainly helpful if you have ran Python programs on your machine before. I have included generic instructions to run the program as well.
 
 ### Windows
-- If you are on **Windows**, you can use the following command(s) to run the program **with the root-finding method of your choice** for problems 1 and 2 (please see the "Usage" section for more details): 
+- If you are on **Windows**, you can use the following command(s) to run the program **with the methods of your choice** for problems 1 and 2 (please see the "Usage" section for more details): 
 
 ```
 py rpacia_ams326_hw1_p1.py bisect|newton|secant|monte_carlo
