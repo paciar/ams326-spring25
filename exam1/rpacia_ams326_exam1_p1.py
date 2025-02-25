@@ -26,7 +26,7 @@ def poly(matrix_A, matrix_b, x):
     matrix_ATb = np.matmul(matrix_AT, matrix_b)
     matrix_c = np.linalg.solve(matrix_ATA, matrix_ATb)
     # We now have solved for c_1, c_2, and c_3.
-    print(f"P_3(t) = {matrix_c[0][0]} + {matrix_c[1][0]}t + {matrix_c[2][0]}t^2\n")
+    print(f"P_3(t) = {matrix_c[0][0]} + {matrix_c[1][0]}t + {matrix_c[2][0]}t^2 + {matrix_c[3][0]}t^3\n")
     qx = matrix_c[0][0] + (matrix_c[1][0] * x) + (matrix_c[2][0] * (x**2)) + (matrix_c[3][0] * (x**3))
     return qx
 
