@@ -24,16 +24,16 @@ Acknowledgements:
 """
 def rectangle(theta_min, theta_max, n, r):
     # Calculate step size (delta theta) by dividing total interval over number of subintervals.
-    del_theta = (theta_max - theta_min) / n
+    delta_theta = (theta_max - theta_min) / n
     # Accumulate all r(theta_i*)^2 values in area.
     area = 0
     for i in range(n):
-        # Midpoint of interval i can be calculated using theta_min + del_theta * (interval index + 0.5)
-        theta_mid = theta_min + (del_theta * (i + 0.5))
+        # Midpoint of interval i can be calculated using theta_min + delta_theta * (interval index + 0.5)
+        theta_mid = theta_min + (delta_theta * (i + 0.5))
         r_mid = r(theta_mid)
         area += r_mid**2
     # Multiply accumulated values by 1/2 * delta theta, as shown in my report.
-    area *= 0.5 * del_theta
+    area *= 0.5 * delta_theta
     # Area = 1/2 * \int_{theta_min}^{theta_max} r^2 d\theta
     return area
 
