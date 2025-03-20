@@ -13,19 +13,19 @@
 - Open a terminal window and ensure that you are in the `hw2` folder.
 - It is certainly helpful if you have ran Python programs on your machine before. I have included generic instructions to run the program as well.
 
-<!-- README under construction -->
-
 ### Windows
-- If you are on **Windows**, you can use the following command(s) to run the program **with the methods of your choice** for problem 1 (please see the "Usage" section for more details): 
+- If you are on **Windows**, you can use the following command(s) to run the program **with the methods of your choice** for problem 1 and problem 2 (please see the "Usage" section for more details): 
 
 ```
 py rpacia_ams326_hw2_p1.py rectangle|trapezoid
+py rpacia_ams326_hw2_p2.py
 ```
 
 or
 
 ```
 python rpacia_ams326_hw2_p1.py rectangle|trapezoid
+python rpacia_ams326_hw2_p2.py
 ```
 
 > NOTE: if you try to run the program using `python`, it must be properly configured as a PATH variable.
@@ -35,13 +35,14 @@ python rpacia_ams326_hw2_p1.py rectangle|trapezoid
 - If you are on **MacOS or Linux**, you can use:
 ```
 python3 rpacia_ams326_hw2_p1.py rectangle|trapezoid
+python3 rpacia_ams326_hw2_p2.py
 ```
 
 ## Usage
-As you may have noticed, I had configured my program to parse command line arguments.
+As you may have noticed, I had configured my program to parse command line arguments for problem 1.
 
 ### Problem 1
 For problem 1, if you want to run the rectangle method, for example, you can run `py rpacia_ams326_hw2_p1.py rectangle` (or similarly, using `python3` if you are not on Windows). If you want to run the trapezoid method, you can run `py rpacia_ams326_hw2_p1.py trapezoid`. Note that only one method can be run at a time.
 
-<!-- ### Problem 2
-Similarly, for problem 2, if you want to run the polynomial interpolation, you can run `py rpacia_ams326_hw1_p2.py polynomial`. If you want to run the quadratic fit, you can run `py rpacia_ams326_hw1_p2.py quadratic`. Note that only one method can be run at a time. -->
+### Problem 2
+For problem 2, all you need to do is run the file using `py rpacia_ams326_hw2_p2.py` (or similarly, using `python3` if you are not on Windows) because I only implemented Gaussian elimination for solving Ax = b.
