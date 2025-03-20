@@ -105,6 +105,8 @@ def main():
                 # If not within tolerance, repeat again with double the number of subintervals.
                 print("Not within tolerance! Looping...")
                 prev_area = current_area
+        print(f"Kidney area: {kidney_area}")
+        print(f"Disc area: {disc_area}")
         print(f"Area of remaining kidney using rectangle method: {kidney_area - disc_area}")
         print(f"Number of subintervals: {n}")
     elif (sys.argv[1] == "trapezoid"):
@@ -128,6 +130,8 @@ def main():
                 # If not within tolerance, repeat again with double the number of subintervals.
                 print("Not within tolerance! Looping...")
                 prev_area = current_area
+        print(f"Kidney area: {kidney_area}")
+        print(f"Disc area: {disc_area}")
         print(f"Area of remaining kidney using trapezoid method: {kidney_area - disc_area}")
         print(f"Number of subintervals: {n}")
     else:
