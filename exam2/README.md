@@ -5,7 +5,7 @@
 ## Requirements
 - A Windows, MacOS, or Linux environment is suitable for running my Exam 2 code (it is written in Python)
 - Python 3 must be installed and properly configured on your system. For reference, my program runs on Python 3.12.6.
-- numpy must also be installed and properly configured on your system. To install numpy, run `pip install numpy` in a terminal window. The other libraries I use should already come preinstalled with Python 3.
+- numpy and scipy must also be installed and properly configured on your system. To install numpy, run `pip install numpy` in a terminal window. Likewise, to install scipy, run `pip install scipy` in a terminal window. The other libraries I use should already come preinstalled with Python 3.
 - I recommend opening the `rpacia_ams326_exam2_p1.py`file in a programming software like VS Code, but it is also feasible to open from the command line (as long as you are `cd`-ed into the correct directory).
 
 ## Instructions
