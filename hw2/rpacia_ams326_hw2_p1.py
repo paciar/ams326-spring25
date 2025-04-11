@@ -71,12 +71,24 @@ def trapezoid(theta_min, theta_max, n, r):
     return area
 
 # Kidney Equation (polar form)
+# FIXED after HW2 grades released.
 def kidney(theta):
-    return (np.cos(theta))**3 + (np.sin(theta))**3
+    res = (np.cos(theta))**3 + (np.sin(theta))**3
+    # Before returning r(theta), make sure it is non-negative.
+    if (res > 0):
+        return res
+    else:
+        return 0
 
 # Disc Equation (polar form, and translated to origin)
+# FIXED after HW2 grades released.
 def disc(theta):
-    return np.sqrt(0.125)
+    res = np.sqrt(0.125)
+    # Before returning r(theta), make sure it is non-negative.
+    if (res > 0):
+        return res
+    else:
+        return 0
 
 def main():
     # Areas have to be correct within 4 significant digits.
