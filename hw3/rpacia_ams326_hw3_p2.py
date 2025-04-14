@@ -23,6 +23,7 @@ from shapely.geometry import Polygon, box
 from shapely.affinity import rotate, translate
 # Since the program can take a while, we can also track execution time just to let the user know how long it took.
 import time
+import sys
 
 # Rose curve: r = sin(2 * theta)
 # We can generate points along the curve and wrap it in Shapely's Polygon class.
@@ -58,6 +59,7 @@ def metropolis(rose, iterations):
     init_alpha = np.random.uniform(0, 180)
     # Initial state
     current_state = np.array([init_x, init_y, init_alpha])
+    print(f"Number of iterations: {iterations}")
     print(f"Initial state: {current_state}")
     # Calculate initial area of intersection between rose curve and rectangular cutter
     current_area = rose.intersection(rectangle_cutter(*current_state)).area
@@ -85,13 +87,23 @@ def metropolis(rose, iterations):
 
 def main():
     # I used the Shapely library to perform the rotations/translations for the cookie cutter and to calculate overlapping area.
-    start = time.perf_counter()
+    
     iterations = 1_000_000
+    # Allow user to specify iterations
+    if (len(sys.argv) == 2):
+        try:
+            iterations = int(sys.argv[1])
+        except Exception as e:
+            print("Usage: rpacia_ams326_hw3_p2.py <iterations>")
+            print(e)
+            exit(1)
+
     rose = rose_curve()
+    start = time.perf_counter()
     best_state, best_area = metropolis(rose, iterations)
+    end = time.perf_counter()
     print(f"Optimized state (x,y,alpha): {best_state}")
     print(f"Optimized cut area: {best_area:.4f}")
-    end = time.perf_counter()
     print(f"Total execution time: {end - start} seconds")
 
     """
