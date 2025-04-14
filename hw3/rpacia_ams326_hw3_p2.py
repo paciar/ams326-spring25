@@ -50,9 +50,57 @@ def rectangle_cutter(x, y, alpha):
     rect_polygon = translate(rect_polygon, x, y)
     return rect_polygon
 
+# Metropolis method
+def metropolis(rose, iterations):
+    # Generate random initial state
+    init_x = np.random.uniform(-0.1, 0.1)
+    init_y = np.random.uniform(-0.1, 0.1)
+    init_alpha = np.random.uniform(0, 180)
+    # Initial state
+    current_state = np.array([init_x, init_y, init_alpha])
+    print(f"Initial state: {current_state}")
+    # Calculate initial area of intersection between rose curve and rectangular cutter
+    current_area = rose.intersection(rectangle_cutter(*current_state)).area
+
+    # Metropolis method loop
+    for _ in range(iterations):
+        # Calculate new state
+        dx = np.random.uniform(-0.1, 0.1)
+        dy = np.random.uniform(-0.1, 0.1)
+        da = np.random.uniform(-0.1, 0.1)
+        perturb_state = np.array([dx, dy, da])
+        new_state = current_state + perturb_state
+
+        # Calculate new area of intersection between rose curve and rectangular cutter using the new state
+        new_area = rose.intersection(rectangle_cutter(*new_state)).area
+
+        # If perturbed state is better, accept it
+        if (new_area > current_area):
+            current_state = new_state
+            current_area = new_area
+
+    # After iterations have completed, return the state and area
+    return current_state, current_area
+        
+
 def main():
     # I used the Shapely library to perform the rotations/translations for the cookie cutter and to calculate overlapping area.
-    exit(0)
+    start = time.perf_counter()
+    iterations = 1_000_000
+    rose = rose_curve()
+    best_state, best_area = metropolis(rose, iterations)
+    print(f"Optimized state (x,y,alpha): {best_state}")
+    print(f"Optimized cut area: {best_area:.4f}")
+    end = time.perf_counter()
+    print(f"Total execution time: {end - start} seconds")
+
+    """
+    Sample run:
+    Initial state: [0.02754731 0.09745056 6.25095078]
+    Optimized state (x,y,alpha): [ 0.00015612 -0.00013128 -0.01306917]
+    Optimized cut area: 0.5879
+    Total execution time: 947.6344595999981 seconds
+    """
 
 if __name__ == "__main__":
     main()
