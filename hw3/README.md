@@ -5,7 +5,7 @@
 ## Requirements
 - A Windows, MacOS, or Linux environment is suitable for running my HW3 code (it is written in Python)
 - Python 3 must be installed and properly configured on your system. For reference, my program runs on Python 3.12.6.
-- numpy and shapely must also be installed and properly configured on your system. To install numpy, run `pip install numpy` in a terminal window. To install shapely, run `pip install shapely` in a terminal window. The other libraries I use should already come preinstalled with Python 3.
+- numpy, shapely, and matplotlib must also be installed and properly configured on your system. To install numpy, run `pip install numpy` in a terminal window. To install shapely, run `pip install shapely` in a terminal window. To install matplotlib, run `pip install matplotlib` in a terminal window. The other libraries I use should already come preinstalled with Python 3.
 - I recommend opening the `rpacia_ams326_hw3_p1.py`, `rpacia_ams326_hw3_p2.py`, and `rpacia_ams326_hw3_p3.py` files in a programming editor like VS Code, but it is also feasible to open from the command line (as long as you are `cd`-ed into the correct directory).
 
 ## Instructions
