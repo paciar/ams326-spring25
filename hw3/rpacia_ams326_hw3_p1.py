@@ -12,6 +12,8 @@ Buffon Disc Problem
 - Calculate probabilities using number of times n lines were crossed / total discs used for all n = 1, 2, 3, 4 lines
 """
 
+# TODO: Add plots for probabilities
+
 import numpy as np
 import math
 

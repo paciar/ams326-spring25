@@ -43,5 +43,9 @@ python3 rpacia_ams326_hw3_p3.py
 
 ## Usage
 
+### Problem 1
+For problem 1, all you need to do is run the Python file. It should take under a minute, and the statistics are printed incrementally.
+TODO: Need to add plotting.
+
 ### Problem 2
-For problem 2, I used the Metropolis method for optimization with a default iteration count of `1_000_000`. You can also run the program with the optional `<iterations>` argument to specify a different number of iterations. For example, if you wanted to run the Metropolis method with `100_000` iterations instead, you can run `py rpacia_ams326_hw3_p2.py 100000`. If you don't want to specify an iteration count and just use the default iteration count, you can run `py rpacia_ams326_hw3_p2.py`.
+For problem 2, I used the Metropolis method for optimization with a default iteration count of `1_000_000`. You can also run the program with the optional `<iterations>` argument to specify a different number of iterations. For example, if you wanted to run the Metropolis method with `100_000` iterations instead, you can run `py rpacia_ams326_hw3_p2.py 100000`. If you don't want to specify an iteration count and just use the default iteration count, you can run `py rpacia_ams326_hw3_p2.py`. It may take around 10-15 minutes for the entire simulation to complete.
