@@ -18,7 +18,7 @@ Cookie-Cutter Problem
 
 # Required external libraries: numpy, matplotlib, shapely
 import numpy as np
-import matplotlib.pyplot as plot
+import matplotlib.pyplot as plt
 from shapely.geometry import Polygon, box
 from shapely.affinity import rotate, translate
 # Since the program can take a while, we can also track execution time just to let the user know how long it took.
@@ -100,7 +100,7 @@ def main():
         try:
             iterations = int(sys.argv[1])
         except Exception as e:
-            print("Usage: rpacia_ams326_hw3_p2.py <iterations>")
+            print("Usage: rpacia_ams326_hw3_p2.py [iterations]")
             print(e)
             exit(1)
 
@@ -147,13 +147,13 @@ def main():
     x_rect, y_rect = best_rect.exterior.xy
     x_rose, y_rose = rose.exterior.xy
 
-    plot.figure(figsize=(5,5))
-    plot.grid(True)
-    plot.plot(x_rose, y_rose, color="red", label="Rose Curve")
-    plot.plot(x_rect, y_rect, color="black", label="Rectangular Cutter")
-    plot.title("Optimized Rectangular Cutter Placement")
-    plot.legend()
-    plot.show()
+    plt.figure(figsize=(5,5))
+    plt.grid(True)
+    plt.plot(x_rose, y_rose, color="red", label="Rose Curve")
+    plt.plot(x_rect, y_rect, color="black", label="Rectangular Cutter")
+    plt.title("Optimized Rectangular Cutter Placement")
+    plt.legend()
+    plt.show()
 
 if __name__ == "__main__":
     main()
