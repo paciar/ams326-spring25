@@ -18,7 +18,7 @@
 
 ```
 py rpacia_ams326_hw3_p1.py
-py rpacia_ams326_hw3_p2.py <iterations>
+py rpacia_ams326_hw3_p2.py [iterations]
 py rpacia_ams326_hw3_p3.py
 ```
 
@@ -26,7 +26,7 @@ or
 
 ```
 python rpacia_ams326_hw3_p1.py
-python rpacia_ams326_hw3_p2.py <iterations>
+python rpacia_ams326_hw3_p2.py [iterations]
 python rpacia_ams326_hw3_p3.py
 ```
 
@@ -37,7 +37,7 @@ python rpacia_ams326_hw3_p3.py
 - If you are on **MacOS or Linux**, you can use:
 ```
 python3 rpacia_ams326_hw3_p1.py
-python3 rpacia_ams326_hw3_p2.py <iterations>
+python3 rpacia_ams326_hw3_p2.py [iterations]
 python3 rpacia_ams326_hw3_p3.py
 ```
 
@@ -47,7 +47,7 @@ python3 rpacia_ams326_hw3_p3.py
 For problem 1, all you need to do is run the Python file. It should take under a minute, and the statistics are printed incrementally.
 
 ### Problem 2
-For problem 2, I used the Metropolis method for optimization with a default iteration count of `1_000_000`. You can also run the program with the optional `<iterations>` argument to specify a different number of iterations. For example, if you wanted to run the Metropolis method with `100_000` iterations instead, you can run `py rpacia_ams326_hw3_p2.py 100000`. If you don't want to specify an iteration count and just use the default iteration count, you can run `py rpacia_ams326_hw3_p2.py`. It may take around 10-15 minutes for the entire simulation to complete.
+For problem 2, I used the Metropolis method for optimization with a default iteration count of `1_000_000`. You can also run the program with the optional `[iterations]` argument to specify a different number of iterations. For example, if you wanted to run the Metropolis method with `100_000` iterations instead, you can run `py rpacia_ams326_hw3_p2.py 100000`. If you don't want to specify an iteration count and just use the default iteration count, you can run `py rpacia_ams326_hw3_p2.py`. It may take around 10-15 minutes for the entire simulation to complete.
 
 ### Problem 3
 For problem 3, all you need to do is run the Python file. It should take a minute or two, since I used a very small step size for greater accuracy.
