@@ -152,6 +152,8 @@ def main():
     plt.plot(x_rose, y_rose, color="red", label="Rose Curve")
     plt.plot(x_rect, y_rect, color="black", label="Rectangular Cutter")
     plt.title("Optimized Rectangular Cutter Placement")
+    plt.xlabel('x')
+    plt.ylabel('y')
     plt.legend()
     plt.show()
 
