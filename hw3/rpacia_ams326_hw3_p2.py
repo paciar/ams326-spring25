@@ -29,7 +29,7 @@ import sys
 # We can generate points along the curve and wrap it in Shapely's Polygon class.
 def rose_curve():
     # Generate theta values between [0, 2*pi]
-    theta = np.linspace(0, 2 * np.pi, 10000)
+    theta = np.linspace(0, 2 * np.pi, 1000)
     # Calculate r = sin(2 * theta) for all generated theta values
     r = np.abs(np.sin(2 * theta))
     # Convert each (r, theta) to (x,y) coordinates
@@ -69,15 +69,9 @@ def metropolis(rose, iterations):
         # Calculate new state
         dx = np.random.uniform(-0.1, 0.1)
         dy = np.random.uniform(-0.1, 0.1)
-        da = np.random.uniform(-0.1, 0.1)
+        da = np.random.uniform(-1, 1)
         perturb_state = np.array([dx, dy, da])
         new_state = current_state + perturb_state
-
-        # Reject state if (x,y) falls outside of [-0.1, 0.1]
-        if (new_state[0] < -0.1 or new_state[0] > 0.1):
-            continue
-        if (new_state[1] < -0.1 or new_state[1] > 0.1):
-            continue
 
         # Calculate new area of intersection between rose curve and rectangular cutter using the new state
         new_area = rose.intersection(rectangle_cutter(*new_state)).area
@@ -94,7 +88,7 @@ def metropolis(rose, iterations):
 def main():
     # I used the Shapely library to perform the rotations/translations for the cookie cutter and to calculate overlapping area.
     
-    iterations = 1_000_000
+    iterations = 250_000
     # Allow user to specify iterations
     if (len(sys.argv) == 2):
         try:
