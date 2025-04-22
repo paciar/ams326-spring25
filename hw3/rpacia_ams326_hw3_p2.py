@@ -69,9 +69,15 @@ def metropolis(rose, iterations):
         # Calculate new state
         dx = np.random.uniform(-0.1, 0.1)
         dy = np.random.uniform(-0.1, 0.1)
-        da = np.random.uniform(-1, 1)
+        da = np.random.uniform(-3, 3)
         perturb_state = np.array([dx, dy, da])
         new_state = current_state + perturb_state
+
+        # Reject state if (x,y) falls outside of [-0.1, 0.1]
+        if (new_state[0] < -0.1 or new_state[0] > 0.1):
+            continue
+        if (new_state[1] < -0.1 or new_state[1] > 0.1):
+            continue
 
         # Calculate new area of intersection between rose curve and rectangular cutter using the new state
         new_area = rose.intersection(rectangle_cutter(*new_state)).area
