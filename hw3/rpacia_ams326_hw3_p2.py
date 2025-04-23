@@ -61,7 +61,7 @@ def metropolis(rose, iterations):
     # Initial state
     current_state = np.array([init_x, init_y, init_alpha])
     print(f"Number of iterations: {iterations}")
-    print(f"Initial state: (x = {current_state[0]:.4f}, y = {current_state[1]:.4f}, alpha = {current_state[2]:.4f})")
+    print(f"Initial state (x, y, alpha): (x = {current_state[0]:.4f}, y = {current_state[1]:.4f}, alpha = {current_state[2]:.4f})")
     # Calculate initial area of intersection between rose curve and rectangular cutter
     current_area = rose.intersection(rectangle_cutter(*current_state)).area
 
@@ -108,7 +108,7 @@ def main():
     start = time.perf_counter()
     best_state, best_area = metropolis(rose, iterations)
     end = time.perf_counter()
-    print(f"Optimized state (x,y,alpha): (x = {best_state[0]:.4f}, y = {best_state[1]:.4f}, alpha = {best_state[2]:.4f})")
+    print(f"Optimized state (x, y, alpha): (x = {best_state[0]:.4f}, y = {best_state[1]:.4f}, alpha = {best_state[2]:.4f})")
     print(f"Optimized cut area: {best_area:.4f}")
     print(f"Total execution time: {(end - start):.4f} seconds")
 
