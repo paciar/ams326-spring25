@@ -6,12 +6,13 @@
 """
 Cookie-Cutter Problem
 - Idea is to use Metropolis Method for optimization
-- We want to use a relatively large number of samples, so I will be using 1_000_000
+- We want to use a relatively large number of samples, so I will be using 250_000
 - We randomly initialize a state (x,y,alpha) for the rectangular cutter -- (x,y) is the center and alpha is the angle of rotation
 - Based on the heatmap, we know the cutter should be placed near the center, so (x,y) ~U(-0.1, 0.1)
 - We want to vary the angle (in degrees) as well, so alpha ~U(0, 180)
 - We can also put an extra check in place to make sure (x,y) stays within the bounds of [-0.1, 0.1]
-- We want to perturb all 3 dimensions during each iteration using ~U(-0.1, 0.1)
+- We want to perturb the x and y dimensions during each iteration using ~U(-0.1, 0.1) and perturb alpha using ~U(-3, 3) since the range for angles is much larger
+- If the perturbed state results in a (x,y) that goes outside the bounds of [-0.1, 0.1], we reject it so the cutter does not deviate from the center
 - If the perturbed state results in a better-cut area, we accept it -- otherwise, we reject it
 - The method stops once the number of samples has been reached
 """
@@ -60,7 +61,7 @@ def metropolis(rose, iterations):
     # Initial state
     current_state = np.array([init_x, init_y, init_alpha])
     print(f"Number of iterations: {iterations}")
-    print(f"Initial state: {current_state}")
+    print(f"Initial state: (x = {current_state[0]:.4f}, y = {current_state[1]:.4f}, alpha = {current_state[2]:.4f})")
     # Calculate initial area of intersection between rose curve and rectangular cutter
     current_area = rose.intersection(rectangle_cutter(*current_state)).area
 
@@ -89,7 +90,6 @@ def metropolis(rose, iterations):
 
     # After iterations have completed, return the state and area
     return current_state, current_area
-        
 
 def main():
     # I used the Shapely library to perform the rotations/translations for the cookie cutter and to calculate overlapping area.
@@ -108,39 +108,9 @@ def main():
     start = time.perf_counter()
     best_state, best_area = metropolis(rose, iterations)
     end = time.perf_counter()
-    print(f"Optimized state (x,y,alpha): {best_state}")
+    print(f"Optimized state (x,y,alpha): (x = {best_state[0]:.4f}, y = {best_state[1]:.4f}, alpha = {best_state[2]:.4f})")
     print(f"Optimized cut area: {best_area:.4f}")
-    print(f"Total execution time: {end - start} seconds")
-
-    """
-    Sample run 1:
-    Number of iterations: 1000000
-    Initial state: [0.02754731 0.09745056 6.25095078]
-    Optimized state (x,y,alpha): [ 0.00015612 -0.00013128 -0.01306917]
-    Optimized cut area: 0.5879
-    Total execution time: 947.6344595999981 seconds
-
-    Sample run 2:
-    Number of iterations: 1000000
-    Initial state: [-0.09709829  0.04643097 27.17067133]
-    Optimized state (x,y,alpha): [-4.40507705e-05  2.10565046e-04  3.27267581e-02]
-    Optimized cut area: 0.5879
-    Total execution time: 743.6423022999661 seconds
-
-    Sample run 3:
-    Number of iterations: 1000000
-    Initial state: [-0.0570981  -0.08394749 23.41578302]
-    Optimized state (x,y,alpha): [ 7.05640554e-06  8.79891320e-05 -3.31716669e-02]
-    Optimized cut area: 0.5879
-    Total execution time: 1245.0250296000158 seconds
-
-    Sample run 4:
-    Number of iterations: 1000000
-    Initial state: [ 0.07090607  0.06752516 61.25485927]
-    Optimized state (x,y,alpha): [ 2.82145147e-05 -1.43173097e-04  9.00368858e+01]
-    Optimized cut area: 0.5879
-    Total execution time: 665.5339244999923 seconds
-    """
+    print(f"Total execution time: {(end - start):.4f} seconds")
 
     # Plot the optimized rectangular cutter and rose curve (ChatGPT helped me with this)
     best_rect = rectangle_cutter(*best_state)
