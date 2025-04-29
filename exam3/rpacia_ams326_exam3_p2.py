@@ -4,7 +4,7 @@
 # Ralf Pacia
 
 import numpy as np
-from shapely.geometry import Polygon, LineString
+from shapely.geometry import Polygon, LineString, Point
 
 # Rose curve: r = sin(2 * theta)
 # We can generate points along the curve and wrap it in Shapely's Polygon class.
@@ -37,9 +37,9 @@ def num_crossings(needle_states, l, rose):
         # Generate needle
         needle = generate_needle(state[0], state[1], state[2], l)
         # Calculate intersection with rose
-        intersection = needle.intersection(rose)
+        inter = needle.intersection(rose)
         # If there are at least 2 intersections, increment counter by 1
-        if (intersection.geom_type == "Multipoint"):
+        if (not inter.is_empty and not isinstance(inter, Point)):
             intersections += 1
         # Otherwise, do not increment
     return intersections
