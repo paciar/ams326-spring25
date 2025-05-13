@@ -17,7 +17,7 @@ def rose_curve():
     x = r * np.cos(theta)
     y = r * np.sin(theta)
     # Wrap all points into a polygon
-    rose_polygon = Polygon(np.column_stack((x, y)))
+    rose_polygon = LineString(np.column_stack((x, y)))
     return rose_polygon
 
 # Generate a LineString object for a needle of length l centered at (x,y) with rotation angle alpha.
@@ -37,7 +37,7 @@ def num_crossings(needle_states, l, rose):
         # Generate needle
         needle = generate_needle(state[0], state[1], state[2], l)
         # Calculate intersection with rose
-        inter = needle.intersection(rose)
+        inter = needle.intersection(rose.buffer(0.005))
         # If there are at least 2 intersections, increment counter by 1
         if (not inter.is_empty and not isinstance(inter, Point)):
             intersections += 1
