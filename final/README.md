@@ -5,7 +5,7 @@
 ## Requirements
 - A Windows, MacOS, or Linux environment is suitable for running my Final Exam code (it is written in Python)
 - Python 3 must be installed and properly configured on your system. For reference, my program runs on Python 3.12.6.
-- numpy, shapely, and matplotlib must also be installed and properly configured on your system. To install numpy, run `pip install numpy` in a terminal window. To install shapely, run `pip install shapely` in a terminal window. To install matplotlib, run `pip install matplotlib` in a terminal window. The other libraries I use should already come preinstalled with Python 3.
+- numpy must also be installed and properly configured on your system. To install numpy, run `pip install numpy` in a terminal window. The other libraries I use should already come preinstalled with Python 3.
 - I recommend opening the `rpacia_ams326_final_p*.py` file in a programming editor like VS Code, but it is also feasible to open from the command line (as long as you are `cd`-ed into the correct directory).
 
 ## Instructions
@@ -17,13 +17,17 @@
 - If you are on **Windows**, you can use the following command(s) to run the programs (please see the "Usage" section for more details): 
 
 ```
-py rpacia_ams326_final_p*.py
+py rpacia_ams326_final_p1.py
+py rpacia_ams326_final_p3.py
+py rpacia_ams326_final_p4.py
 ```
 
 or
 
 ```
-python rpacia_ams326_final_p*.py
+python rpacia_ams326_final_p1.py
+python rpacia_ams326_final_p3.py
+python rpacia_ams326_final_p4.py
 ```
 
 > NOTE: if you try to run the program using `python`, it must be properly configured as a PATH variable.
@@ -32,9 +36,10 @@ python rpacia_ams326_final_p*.py
 ### MacOS and Linux
 - If you are on **MacOS or Linux**, you can use:
 ```
-python3 rpacia_ams326_final_p*.py
+python3 rpacia_ams326_final_p1.py
+python3 rpacia_ams326_final_p3.py
+python3 rpacia_ams326_final_p4.py
 ```
 
 ## Usage
-
-### WIP
+- Just run the provided files as normal.
